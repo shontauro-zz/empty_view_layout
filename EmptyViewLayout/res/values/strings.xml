@@ -11,5 +11,6 @@
     <string name="but_show_error">Error</string>
     <string name="but_show_empty">Empty</string>
     <string name="but_show_content">Content</string>
+    <string name="try_again_but_pressed">Try again button pressed</string>
 
 </resources>

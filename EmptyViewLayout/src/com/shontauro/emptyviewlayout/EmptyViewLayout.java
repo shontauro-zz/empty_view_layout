@@ -51,8 +51,8 @@ public class EmptyViewLayout {
 	// default values
 	// ---------------------------
 	private int mEmptyType = TYPE_LOADING;
-	private String mErrorMessage = "Oops! Something wrong happened";
-	private String mEmptyMessage = "No items yet";
+	private String mErrorMessage = "Error";
+	private String mEmptyMessage = "Empty";
 	private int mErrorViewButtonId = R.id.but_action;
 	private int mEmptyViewButtonId = R.id.but_action;
 	private boolean mShowEmptyButton = true;
@@ -600,22 +600,11 @@ public class EmptyViewLayout {
 	 * 
 	 * @param context
 	 *            the context (preferred context is any activity)
-	 */
-	public EmptyViewLayout(Context context) {
-		mContext = context;
-		mInflater = (LayoutInflater) mContext
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		mShortAnimationDuration = mContext.getResources().getInteger(
-				android.R.integer.config_shortAnimTime);
-	}
-
-	/**
-	 * Constructor
-	 * 
-	 * @param context
-	 *            the context (preferred context is any activity)
 	 * @param contentView
-	 *            the contentView for which this library is being used
+	 *            the contentView for which this library is being used, this
+	 *            view can't be the root view of the hierarchy, It has to be a
+	 *            view (Any LinearLayout, RelativeLayout, View, etc) inside the
+	 *            root view
 	 */
 	public EmptyViewLayout(Context context, View contentView) {
 		mContext = context;

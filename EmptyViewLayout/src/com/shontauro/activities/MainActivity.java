@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,7 +53,15 @@ public class MainActivity extends Activity {
 		mEmptyViewLayout.setErrorMessage(getString(R.string.error_msg));
 		mEmptyViewLayout.setErrorButtonClickListener(mErrorClickListener);
 
-		loadData();
+		mEmptyViewLayout.showLoading();
+		new Handler().postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				getData();
+				mEmptyViewLayout.showContentView();
+			}
+		}, 1000 * 3);
 	}
 
 	@Override
@@ -99,7 +108,7 @@ public class MainActivity extends Activity {
 		}
 	};
 
-	private void loadData() {
+	private void getData() {
 		ArrayList<String> list = new ArrayList<String>();
 		list.addAll(Arrays.asList(NUMBERS));
 		mAdapter = new ArrayAdapter<String>(this,

@@ -14,19 +14,6 @@ import android.widget.TextView;
 
 public class EmptyViewLayout {
 
-	private Context mContext;
-	private LinearLayout mBackgroundViews;
-	private ViewGroup mLoadingView;
-	private ViewGroup mEmptyView;
-	private ViewGroup mErrorView;
-	private View mContentView;
-	private int mErrorMessageViewId;
-	private int mEmptyMessageViewId;
-	private LayoutInflater mInflater;
-	private boolean mViewsAdded;
-	private View.OnClickListener mEmptyButtonClickListener;
-	private View.OnClickListener mErrorButtonClickListener;
-
 	// ---------------------------
 	// static variables
 	// ---------------------------
@@ -46,6 +33,22 @@ public class EmptyViewLayout {
 	 * The content view state
 	 */
 	public final static int TYPE_CONTENT_VIEW_STATE = 4;
+
+	// ---------------------------
+	// members variables
+	// ---------------------------
+	private Context mContext;
+	private LinearLayout mBackgroundViews;
+	private ViewGroup mLoadingView;
+	private ViewGroup mEmptyView;
+	private ViewGroup mErrorView;
+	private View mContentView;
+	private int mErrorMessageViewId;
+	private int mEmptyMessageViewId;
+	private LayoutInflater mInflater;
+	private boolean mViewsAdded;
+	private View.OnClickListener mEmptyButtonClickListener;
+	private View.OnClickListener mErrorButtonClickListener;
 
 	// ---------------------------
 	// default values
@@ -605,6 +608,11 @@ public class EmptyViewLayout {
 	 *            view can't be the root view of the hierarchy, It has to be a
 	 *            view (Any LinearLayout, RelativeLayout, View, etc) inside the
 	 *            root view
+	 * 
+	 *            El content view para la cual estas usando esta lib, este
+	 *            content view no puede ser el view raiz de la jerarquia, tiene
+	 *            que ser un view cualquiera como LinearLayout, RelativeLayout,
+	 *            etc. que este dentro del view raiz.
 	 */
 	public EmptyViewLayout(Context context, View contentView) {
 		mContext = context;

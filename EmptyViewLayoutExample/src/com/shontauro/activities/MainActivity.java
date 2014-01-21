@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.shontauro.emptyviewlayout.EmptyViewLayout;
-import com.shontauro.emptyviewlayout.R;
+import com.shontauro.example.R;
 
 public class MainActivity extends Activity {
 
@@ -50,11 +50,12 @@ public class MainActivity extends Activity {
 		mEmptyViewLayout = new EmptyViewLayout(this, mListView);
 		mEmptyViewLayout.setEmptyMessage(getString(R.string.empty_msg));
 		mEmptyViewLayout.setEmptyButtonClickListener(mEmptyClickListener);
-		mEmptyViewLayout.setTitleEmptyButton("empty but");
+		mEmptyViewLayout
+				.setTitleEmptyButton(getString(R.string.but_show_empty));
 		mEmptyViewLayout.setErrorMessage(getString(R.string.error_msg));
 		mEmptyViewLayout.setErrorButtonClickListener(mErrorClickListener);
-		mEmptyViewLayout.setTitleErrorButton("error but");
-		mEmptyViewLayout.setShowErrorButton(false);
+		mEmptyViewLayout
+				.setTitleErrorButton(getString(R.string.but_show_error));
 		mEmptyViewLayout.showLoading();
 		new Handler().postDelayed(new Runnable() {
 

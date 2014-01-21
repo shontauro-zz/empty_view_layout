@@ -2,8 +2,10 @@ package com.shontauro.emptyviewlayout;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -365,18 +367,26 @@ public class EmptyViewLayout {
 				if (mErrorView != null) {
 					mErrorView.setVisibility(View.GONE);
 				}
-				// if (mLoadingView != null) {
-				// mLoadingView.setVisibility(View.GONE);
-				// }
-				if (mContentView != null) {
-					if (mLoadingView != null
-							&& mLoadingView.getVisibility() == View.VISIBLE) {
-						crossfadeView();
-					} else {
+				if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB_MR1) {
+					if (mContentView != null) {
+						if (mLoadingView != null
+								&& mLoadingView.getVisibility() == View.VISIBLE) {
+							crossfadeView();
+						} else {
+							mBackgroundViews.setVisibility(View.GONE);
+							mContentView.setVisibility(View.VISIBLE);
+						}
+						mContentView.setEnabled(true);
+					}
+				} else {
+					if (mLoadingView != null) {
+						mLoadingView.setVisibility(View.GONE);
+					}
+					if (mContentView != null) {
 						mBackgroundViews.setVisibility(View.GONE);
 						mContentView.setVisibility(View.VISIBLE);
+						mContentView.setEnabled(true);
 					}
-					mContentView.setEnabled(true);
 				}
 				break;
 			default:
@@ -480,6 +490,7 @@ public class EmptyViewLayout {
 		}
 	}
 
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
 	private void crossfadeView() {
 		// Set the content view to 0% opacity but visible, so that it is visible
 		// (but fully transparent) during the animation.

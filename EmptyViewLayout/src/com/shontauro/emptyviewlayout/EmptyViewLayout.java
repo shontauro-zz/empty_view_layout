@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -43,8 +44,6 @@ public class EmptyViewLayout {
 	private ViewGroup mEmptyView;
 	private ViewGroup mErrorView;
 	private View mContentView;
-	private int mErrorMessageViewId;
-	private int mEmptyMessageViewId;
 	private LayoutInflater mInflater;
 	private boolean mViewsAdded;
 	private View.OnClickListener mEmptyButtonClickListener;
@@ -54,10 +53,10 @@ public class EmptyViewLayout {
 	// default values
 	// ---------------------------
 	private int mEmptyType = TYPE_LOADING;
-	private String mErrorMessage = "Error";
-	private String mEmptyMessage = "Empty";
-	private int mErrorViewButtonId = R.id.but_action;
-	private int mEmptyViewButtonId = R.id.but_action;
+	private String mErrorMessage;
+	private String mEmptyMessage;
+	private String mErroButtonTitle = null;
+	private String mEmptyButtonTitle = null;
 	private boolean mShowEmptyButton = true;
 	private boolean mShowErrorButton = true;
 	private int mShortAnimationDuration;
@@ -75,55 +74,12 @@ public class EmptyViewLayout {
 	}
 
 	/**
-	 * Sets loading layout
-	 * 
-	 * @param loadingView
-	 *            the layout to be shown when the content view is loading
-	 */
-	public void setLoadingView(ViewGroup loadingView) {
-		this.mLoadingView = loadingView;
-	}
-
-	/**
-	 * Sets loading layout resource
-	 * 
-	 * @param res
-	 *            the resource of the layout to be shown when the content view
-	 *            is loading
-	 */
-	public void setLoadingViewRes(int res) {
-		this.mLoadingView = (ViewGroup) mInflater.inflate(res, null);
-	}
-
-	/**
 	 * Gets the empty layout
 	 * 
 	 * @return the empty layout
 	 */
 	public ViewGroup getEmptyView() {
 		return mEmptyView;
-	}
-
-	/**
-	 * Sets empty layout
-	 * 
-	 * @param emptyView
-	 *            the layout to be shown when the content view is not available
-	 *            to be shown
-	 */
-	public void setEmptyView(ViewGroup emptyView) {
-		this.mEmptyView = emptyView;
-	}
-
-	/**
-	 * Sets empty layout resource
-	 * 
-	 * @param res
-	 *            the resource of the layout to be shown when the content view
-	 *            is not available to be shown
-	 */
-	public void setEmptyViewRes(int res) {
-		this.mEmptyView = (ViewGroup) mInflater.inflate(res, null);
 	}
 
 	/**
@@ -136,43 +92,12 @@ public class EmptyViewLayout {
 	}
 
 	/**
-	 * Sets error layout
-	 * 
-	 * @param errorView
-	 *            the layout to be shown when the content view could not be
-	 *            shown due to some error
-	 */
-	public void setErrorView(ViewGroup errorView) {
-		this.mErrorView = errorView;
-	}
-
-	/**
-	 * Sets error layout resource
-	 * 
-	 * @param res
-	 *            the resource of the layout to be shown when content view could
-	 *            not be loaded due to some error
-	 */
-	public void setErrorViewRes(int res) {
-		this.mErrorView = (ViewGroup) mInflater.inflate(res, null);
-	}
-
-	/**
 	 * Gets the content view for which this library is being used
 	 * 
 	 * @return the content view
 	 */
 	public View getMainView() {
 		return mContentView;
-	}
-
-	/**
-	 * Sets the list view for which this library is being used
-	 * 
-	 * @param contentView
-	 */
-	public void setViewGroup(ViewGroup contentView) {
-		this.mContentView = contentView;
 	}
 
 	/**
@@ -211,24 +136,22 @@ public class EmptyViewLayout {
 	 * 
 	 * @param errorMessage
 	 *            the error message
-	 * @param messageViewId
-	 *            the id of the text view within the error layout whose text
-	 *            will be changed into this message
-	 */
-	public void setErrorMessage(String errorMessage, int messageViewId) {
-		this.mErrorMessage = errorMessage;
-		this.mErrorMessageViewId = messageViewId;
-	}
-
-	/**
-	 * Sets the message to be shown when the content view could not be loaded
-	 * due to some error
-	 * 
-	 * @param errorMessage
-	 *            the error message
 	 */
 	public void setErrorMessage(String errorMessage) {
 		this.mErrorMessage = errorMessage;
+	}
+
+	/**
+	 * Sets the title for the error button
+	 * 
+	 * @param titleErrorButton
+	 */
+	public void setTitleErrorButton(String titleErrorButton) {
+		this.mErroButtonTitle = titleErrorButton;
+	}
+
+	public String getTitleErrorButton() {
+		return mErroButtonTitle;
 	}
 
 	/**
@@ -242,20 +165,6 @@ public class EmptyViewLayout {
 	}
 
 	/**
-	 * Sets the message to be shown when the content view will be empty
-	 * 
-	 * @param emptyMessage
-	 *            the message
-	 * @param messageId
-	 *            the id of the text view within the empty layout whose text
-	 *            will be changed into this message
-	 */
-	public void setEmptyMessage(String emptyMessage, int messageViewId) {
-		this.mEmptyMessage = emptyMessage;
-		this.mEmptyMessageViewId = messageViewId;
-	}
-
-	/**
 	 * Sets the message to be shown when content view will be empty
 	 * 
 	 * @param emptyMessage
@@ -263,6 +172,19 @@ public class EmptyViewLayout {
 	 */
 	public void setEmptyMessage(String emptyMessage) {
 		this.mEmptyMessage = emptyMessage;
+	}
+
+	/**
+	 * Sets the title for the empty button
+	 * 
+	 * @param titleEmptyButton
+	 */
+	public void setTitleEmptyButton(String titleEmptyButton) {
+		this.mEmptyButtonTitle = titleEmptyButton;
+	}
+
+	public String getTitleEmptyButton() {
+		return mEmptyButtonTitle;
 	}
 
 	/**
@@ -343,46 +265,6 @@ public class EmptyViewLayout {
 		this.mShowErrorButton = showErrorButton;
 	}
 
-	/**
-	 * Gets the ID of the button in the error view
-	 * 
-	 * @return the ID of the button in the error view
-	 */
-	public int getErrorViewButtonId() {
-		return mErrorViewButtonId;
-	}
-
-	/**
-	 * Sets the ID of the button in the error view. This ID is required if you
-	 * want the button the error view to be click-able.
-	 * 
-	 * @param errorViewButtonId
-	 *            the ID of the button in the error view
-	 */
-	public void setErrorViewButtonId(int errorViewButtonId) {
-		this.mErrorViewButtonId = errorViewButtonId;
-	}
-
-	/**
-	 * Gets the ID of the button in the empty view
-	 * 
-	 * @return the ID of the button in the empty view
-	 */
-	public int getEmptyViewButtonId() {
-		return mEmptyViewButtonId;
-	}
-
-	/**
-	 * Sets the ID of the button in the empty view. This ID is required if you
-	 * want the button the empty view to be click-able.
-	 * 
-	 * @param emptyViewButtonId
-	 *            the ID of the button in the empty view
-	 */
-	public void setEmptyViewButtonId(int emptyViewButtonId) {
-		this.mEmptyViewButtonId = emptyViewButtonId;
-	}
-
 	// ---------------------------
 	// private methods
 	// ---------------------------
@@ -391,6 +273,7 @@ public class EmptyViewLayout {
 
 		setDefaultValues();
 		refreshMessages();
+		refreshOnClickListeners();
 
 		// insert views in the root view
 		if (!mViewsAdded) {
@@ -503,14 +386,55 @@ public class EmptyViewLayout {
 	}
 
 	private void refreshMessages() {
-		if (mEmptyMessageViewId > 0 && mEmptyMessage != null) {
-			((TextView) mEmptyView.findViewById(mEmptyMessageViewId))
+		if (mEmptyMessage != null) {
+			((TextView) mEmptyView.findViewById(R.id.lab_message))
 					.setText(mEmptyMessage);
+		} else {
+			((TextView) mEmptyView.findViewById(R.id.lab_message))
+					.setText(mContext.getString(R.string.empty_msg));
 		}
 
-		if (mErrorMessageViewId > 0 && mErrorMessage != null) {
-			((TextView) mErrorView.findViewById(mErrorMessageViewId))
+		if (mErrorMessage != null) {
+			((TextView) mErrorView.findViewById(R.id.lab_message))
 					.setText(mErrorMessage);
+		} else {
+			((TextView) mErrorView.findViewById(R.id.lab_message))
+					.setText(mContext.getString(R.string.error_msg));
+		}
+
+		if (mEmptyButtonTitle != null) {
+			((Button) mEmptyView.findViewById(R.id.but_action))
+					.setText(mEmptyButtonTitle);
+		} else {
+			((Button) mEmptyView.findViewById(R.id.but_action))
+					.setText(mContext.getString(R.string.but_try_again));
+		}
+
+		if (mErroButtonTitle != null) {
+			((Button) mErrorView.findViewById(R.id.but_action))
+					.setText(mErroButtonTitle);
+		} else {
+			((Button) mErrorView.findViewById(R.id.but_action))
+					.setText(mContext.getString(R.string.but_try_again));
+		}
+	}
+
+	private void refreshOnClickListeners() {
+
+		if (mShowEmptyButton && mEmptyButtonClickListener != null) {
+			View emptyViewButton = mEmptyView.findViewById(R.id.but_action);
+			if (emptyViewButton != null) {
+				emptyViewButton.setOnClickListener(mEmptyButtonClickListener);
+				emptyViewButton.setVisibility(View.VISIBLE);
+			}
+		}
+
+		if (mShowErrorButton && mErrorButtonClickListener != null) {
+			View errorViewButton = mErrorView.findViewById(R.id.but_action);
+			if (errorViewButton != null) {
+				errorViewButton.setOnClickListener(mErrorButtonClickListener);
+				errorViewButton.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 
@@ -519,22 +443,16 @@ public class EmptyViewLayout {
 		if (mEmptyView == null) {
 			mEmptyView = (ViewGroup) mInflater.inflate(
 					R.layout.empty_view_layout, null);
-			if (!(mEmptyMessageViewId > 0)) {
-				mEmptyMessageViewId = R.id.lab_message;
-			}
 
-			if (mShowEmptyButton && mEmptyViewButtonId > 0
-					&& mEmptyButtonClickListener != null) {
-				View emptyViewButton = mEmptyView
-						.findViewById(mEmptyViewButtonId);
+			if (mShowEmptyButton && mEmptyButtonClickListener != null) {
+				View emptyViewButton = mEmptyView.findViewById(R.id.but_action);
 				if (emptyViewButton != null) {
 					emptyViewButton
 							.setOnClickListener(mEmptyButtonClickListener);
 					emptyViewButton.setVisibility(View.VISIBLE);
 				}
-			} else if (mEmptyViewButtonId > 0) {
-				View emptyViewButton = mEmptyView
-						.findViewById(mEmptyViewButtonId);
+			} else {
+				View emptyViewButton = mEmptyView.findViewById(R.id.but_action);
 				emptyViewButton.setVisibility(View.GONE);
 			}
 		}
@@ -547,20 +465,16 @@ public class EmptyViewLayout {
 		if (mErrorView == null) {
 			mErrorView = (ViewGroup) mInflater.inflate(
 					R.layout.error_view_layout, null);
-			if (!(mErrorMessageViewId > 0))
-				mErrorMessageViewId = R.id.lab_message;
-			if (mShowErrorButton && mErrorViewButtonId > 0
-					&& mErrorButtonClickListener != null) {
-				View errorViewButton = mErrorView
-						.findViewById(mErrorViewButtonId);
+
+			if (mShowErrorButton && mErrorButtonClickListener != null) {
+				View errorViewButton = mErrorView.findViewById(R.id.but_action);
 				if (errorViewButton != null) {
 					errorViewButton
 							.setOnClickListener(mErrorButtonClickListener);
 					errorViewButton.setVisibility(View.VISIBLE);
 				}
-			} else if (mErrorViewButtonId > 0) {
-				View errorViewButton = mErrorView
-						.findViewById(mErrorViewButtonId);
+			} else {
+				View errorViewButton = mErrorView.findViewById(R.id.but_action);
 				errorViewButton.setVisibility(View.GONE);
 			}
 		}
@@ -621,6 +535,9 @@ public class EmptyViewLayout {
 		mContentView = contentView;
 		mShortAnimationDuration = mContext.getResources().getInteger(
 				android.R.integer.config_shortAnimTime);
+
+		mEmptyMessage = mContext.getString(R.string.empty_msg);
+		mErrorMessage = mContext.getString(R.string.error_msg);
 	}
 
 	/**

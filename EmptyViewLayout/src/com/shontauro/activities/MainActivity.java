@@ -50,9 +50,11 @@ public class MainActivity extends Activity {
 		mEmptyViewLayout = new EmptyViewLayout(this, mListView);
 		mEmptyViewLayout.setEmptyMessage(getString(R.string.empty_msg));
 		mEmptyViewLayout.setEmptyButtonClickListener(mEmptyClickListener);
+		mEmptyViewLayout.setTitleEmptyButton("empty but");
 		mEmptyViewLayout.setErrorMessage(getString(R.string.error_msg));
 		mEmptyViewLayout.setErrorButtonClickListener(mErrorClickListener);
-
+		mEmptyViewLayout.setTitleErrorButton("error but");
+		mEmptyViewLayout.setShowErrorButton(false);
 		mEmptyViewLayout.showLoading();
 		new Handler().postDelayed(new Runnable() {
 
